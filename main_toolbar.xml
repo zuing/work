@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<toolbar>
+	<item id="wk_my" type="buttonSelect" mode="select" width="90" selected="my_work">
+		<item type="button"	id="my_work"	text="我的事项"	 img="open.gif"    />
+		<item type="button"	id="my_star"	text="我的关注"	 img="star.png"/>
+		<item type="button"	id="my_item"	text="我的督办"	 img="other.gif"     />
+		<item type="button"	id="wk_submit"	text="申请结束"	 img="debug.gif"     />
+
+	</item>
+	<item id="sep1"		type="separator"  />
+
+	<item id="wk_cat" type="buttonSelect" mode="select" width="80" selected="wk_all">
+		<item type="button"	id="wk_all"		text="全部"		    img="flag-all.png"      />
+		<item type="button"	id="wk_1"		text="进行中"		img="flag-blue.png"/>
+		<item type="button"	id="wk_2"		text="已完成"		img="flag-green.png" />
+		<item type="button"	id="wk_3"		text="未完成"		img="flag-red.png" />
+		<item type="button"	id="wk_delay"	text="已超时"		img="flag-yellow.png" />
+		<item type="button"	id="wk_0"		text="未下发"		img="flag-gray.png" />
+	</item>
+
+	<item id="key"		type="buttonInput"  width="80"  title="input text here"/>
+	<item id="search"	type="button"		text=""				img="search.png"	imgdis="search.png"/>
+
+
+	<item id="sep2"		type="separator"  />
+	<item type="button"	id="out"		text="发布"		 img="out.png"		imgdis="out_dis.png"/>
+	<item type="button"	id="outall"		text="全部发布"	 img="outall.png"	imgdis="outall_dis.png"/>
+	<item id="sep3"		type="separator"  />
+
+	<item id="process"	type="button"		text="过程进展"		img="percent.png"	imgdis="percent_dis.png"/>
+
+	<item id="star"		type="button"		text="关注"			img="star.png"		imgdis="star_dis.png"/>
+	<item id="sep4"		type="separator"  />
+
+
+	<item id="wk_m" type="buttonSelect" img="new.gif" imgdis="new_dis.gif" text="管理事项" renderSelect="true" openAll="true">
+		<item id="new"		type="button"		text="新增事项"		img="new.gif"		imgdis="new_dis.gif"/>
+		<item id="delete"	type="button"		text="删除事项"		img="delete.png"	imgdis="delete_dis.png"/>
+		<item type="separator"	id="sep5"/>
+
+		<item id="new_single"		type="button"		text="新增特别事项"		img="next.gif"		imgdis="next_dis.gif"/>
+	</item>
+</toolbar>
