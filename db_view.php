@@ -8,7 +8,6 @@ require "dp_common.php";
 function add_row($ids){
 	global $newId,$userdata;
 	$work=htmlspecialchars(iconv('UTF-8','GBK',$_POST[$ids.'_wk_work']),ENT_QUOTES);
-	$name=iconv('GBK','UTF-8',$userdata['name']);
 	$sql = sprintf("insert into %swork_item (wk_work,wk_lasttime,wk_status,wk_parent,wk_uid,wk_uname,wk_createtime) values('%s',%d,%d,%d,%d,'%s',%d)",
 		DB_PREFIX,
 		$work,
@@ -16,7 +15,7 @@ function add_row($ids){
 		0,
 		0,
 		$userdata['user_id'],
-		$name,
+		$userdata['name'],
 		time()
 	);
 	dbquery($sql);

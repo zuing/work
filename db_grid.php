@@ -9,13 +9,14 @@ function add_row($ids){
 	global $newId,$userdata;
 	$work=htmlspecialchars(iconv('UTF-8','GBK',$_POST[$ids.'_wk_work']),ENT_QUOTES);
 
-	$sql = sprintf("insert into %swork_item (wk_work,wk_lasttime,wk_status,wk_parent,wk_uid,wk_createtime,wk_enddate,wk_startdate) values('%s',%d,%d,%d,%d,%d,%d,%d)",
+	$sql = sprintf("insert into %swork_item (wk_work,wk_lasttime,wk_status,wk_parent,wk_uid,wk_uname,wk_createtime,wk_enddate,wk_startdate) values('%s',%d,%d,%d,%d,'%s',%d,%d,%d)",
 		DB_PREFIX,
 		$work,
 		time(),
 		0,
 		$_POST[$ids.'_userdata'],
 		$userdata['user_id'],
+		$userdata['name'],
 		time(),
 		time(),
 		time()

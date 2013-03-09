@@ -12,7 +12,7 @@
 		$conn->sort("wk_lasttime","desc");
 		$conn->event->attach("beforeRender","format_main");
 		$conn->dynamic_loading(50);
-		$conn->render_table(DB_PREFIX."work_item","wk_id","wk_work,wk_lasttime,wk_status");
+		$conn->render_table(DB_PREFIX."work_item","wk_id","wk_work,wk_lasttime,wk_status,wk_uname");
 
 	}	
 	function format_main($row){

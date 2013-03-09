@@ -12,11 +12,11 @@ if (isset($_GET['t']) && $_GET['t']=='loaditem')
 {
 	if ($_GET['act']=="view")	//主题事项
 	{
-		$sql=sprintf("select wk_uid from %swork_item where wk_id=%d",DB_PREFIX,$_GET['pid']);
+		$sql=sprintf("select wk_uid from %swork_item where wk_id=%d",DB_PREFIX,$_GET['id']);
 		if (dbdata($sql,0,0)==$userdata['user_id'])
-			$sql=sprintf("select * from %swork_item where wk_parent=%d order by wk_lasttime desc",DB_PREFIX,$_GET['pid']);
+			$sql=sprintf("select * from %swork_item where wk_parent=%d order by wk_lasttime desc",DB_PREFIX,$_GET['id']);
 		else
-			$sql=sprintf("select * from %swork_item where wk_parent=%d and wk_status<>0 order by wk_lasttime desc",DB_PREFIX,$_GET['pid']);
+			$sql=sprintf("select * from %swork_item where wk_parent=%d and wk_status<>0 order by wk_lasttime desc",DB_PREFIX,$_GET['id']);
 		
 	}
 	
@@ -28,6 +28,11 @@ if (isset($_GET['t']) && $_GET['t']=='loaditem')
 		$sql=sprintf("select * from %swork_item where wk_parent<>0 and wk_uid=%d and wk_parent<>0 order by wk_lasttime desc",DB_PREFIX,$userdata['user_id']);
 	if ($_GET['act']=="wk_submit") //申请结束
 		$sql=sprintf("select * from %swork_item where wk_submit=1 and wk_parent<>0 order by wk_lasttime desc",DB_PREFIX);
+	if ($_GET['act']=="wk_dept") //部门事项
+	{
+		$arr_dept=get_child_dept($_GET['id']);
+		$sql = sprintf("select a.* from %swork_item a inner join %swork_dept b on a.wk_id=b.wk_id where b.wk_did in (%s) and a.wk_status<>0 and wk_parent<>0 order by wk_lasttime desc",DB_PREFIX,DB_PREFIX,implode(",",$arr_dept));
+	}
 
 
 	if ($_GET['act']=="wk_all") //全部
@@ -91,7 +96,7 @@ if (isset($_GET['t']) && $_GET['t']=='loaditem')
 
 		$wk_dept=sprintf("{rows:[%s]}",implode(",",$arr_dept));
 
-		$arr_data[]= sprintf("{id:%d,data:[\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"]}",
+		$arr_data[]= sprintf("{id:%d,data:[\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"]}",
 			$data['wk_id'],
 			$wk_dept,
 			$img,
@@ -100,7 +105,8 @@ if (isset($_GET['t']) && $_GET['t']=='loaditem')
 			date("Y-m-d",$data['wk_startdate']),
 			date("Y-m-d",$data['wk_enddate']),
 			implode("<br>",$arr_dept_0),
-			implode("<br>",$arr_dept_1)
+			implode("<br>",$arr_dept_1),
+			$data['wk_uname']
 			);
 	}
 

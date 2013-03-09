@@ -94,7 +94,8 @@ require "../footer.php";
 				view.add({
 					wk_status:"<img src='<?php echo IMAGES;?>flag-gray.png' width='24px' height='24px'></img>",
 					wk_work: "双击输入事项主题",
-					wk_lasttime:date2str(new Date(),"yyyy-MM-dd hh:mm")
+					wk_lasttime:date2str(new Date(),"yyyy-MM-dd hh:mm"),
+					wk_uname:"<?php echo $userdata['name'];?>"
 				}, 0);
 			}
 			if (id == "delete"){
@@ -133,12 +134,12 @@ require "../footer.php";
 					return false;
 				}
 				mygrid.setUserData("","userdata", view.getSelected());
-				mygrid.addRow((new Date()).valueOf(),[" ","<img src='<?php echo IMAGES;?>flag-gray.png' width='24px' height='24px'></img>","<img src='<?php echo IMAGES;?>attach_dis.png' width='20px' height='20px'></img>^javascript:open_attach();^_self","请输入工作内容",date2str(new Date(),"yyyy-MM-dd"),date2str(new Date(),"yyyy-MM-dd"),"",""],0);
+				mygrid.addRow((new Date()).valueOf(),[" ","<img src='<?php echo IMAGES;?>flag-gray.png' width='24px' height='24px'></img>","<img src='<?php echo IMAGES;?>attach_dis.png' width='20px' height='20px'></img>^javascript:open_attach();^_self","请输入工作内容",date2str(new Date(),"yyyy-MM-dd"),date2str(new Date(),"yyyy-MM-dd"),"","","<?php echo $userdata['name'];?>"],0);
 				return;
 			}
 			if (id == "new_single"){
 				mygrid.setUserData("","userdata", -1);
-				mygrid.addRow((new Date()).valueOf(),[" ","<img src='<?php echo IMAGES;?>flag-gray.png' width='24px' height='24px'></img>","<img src='<?php echo IMAGES;?>attach_dis.png' width='20px' height='20px'></img>^javascript:open_attach();^_self","请输入工作内容",date2str(new Date(),"yyyy-MM-dd"),date2str(new Date(),"yyyy-MM-dd"),"",""],0);
+				mygrid.addRow((new Date()).valueOf(),[" ","<img src='<?php echo IMAGES;?>flag-gray.png' width='24px' height='24px'></img>","<img src='<?php echo IMAGES;?>attach_dis.png' width='20px' height='20px'></img>^javascript:open_attach();^_self","请输入工作内容",date2str(new Date(),"yyyy-MM-dd"),date2str(new Date(),"yyyy-MM-dd"),"","","<?php echo $userdata['name'];?>"],0);
 				return;
 			}
 
@@ -257,55 +258,66 @@ require "../footer.php";
 			if (id == "my_star")
 			{
 				loaditem("my_star",0);
-				view.unselectAll();
+				
 			}
 			if (id == "my_item")
 			{
 				loaditem("my_item",0);
-				view.unselectAll();
+		
 			}
 			if (id == "my_work")
 			{
 				loaditem("my_work",0);
-				view.unselectAll();
+		
 			}
 			if (id == "wk_submit")
 			{
 				loaditem("wk_submit",0);
-				view.unselectAll();
+		
 			}
+			if (id == "wk_dept")
+			{
+				var obj_dept=showdeptdlg()
+				if (obj_dept)
+				{
+					loaditem("wk_dept",obj_dept.id);
+					dhxAccord_main.cells("a1").setText("部门事务--"+obj_dept.name);
+				}
+				obj_dept = null;		
+			}
+
 			if (id == "wk_all")
 			{
 				loaditem("wk_all",0);
-				view.unselectAll();
+		
 			}
 			if (id == "wk_1")
 			{
 				loaditem("wk_1",0);
-				view.unselectAll();
+		
 			}
 			if (id == "wk_2")
 			{
 				loaditem("wk_2",0);
-				view.unselectAll();
+		
 			}
 			if (id == "wk_3")
 			{
 				loaditem("wk_3",0);
-				view.unselectAll();
+		
 			}
 			if (id == "wk_0")
 			{
 				loaditem("wk_0",0);
-				view.unselectAll();
+		
 			}
 			if (id == "wk_delay")
 			{
 				loaditem("wk_delay",0);
-				view.unselectAll();
+				
 			}
 
-
+			view.unselectAll();
 			dhxAccord_main.openItem("a1");
 			dhxAccord_main.cells("a2").hide();
 			dhxAccord_main.cells("a3").hide();
@@ -337,9 +349,9 @@ require "../footer.php";
 		container: "data_container",
 		edit:b_wk,
 		type: {
-			template: "<span class='dhx_strong'>#wk_status#&nbsp;&nbsp;&nbsp;#wk_work#</span><span class='dhx_light'>#wk_lasttime#</span>",
+			template: "<span class='dhx_strong'>#wk_status#&nbsp;&nbsp;&nbsp;#wk_work#</span><span class='dhx_light'>#wk_lasttime#--#wk_uname#</span>",
 			template_edit: "<input onkeydown='if(event.keyCode==27){view.stopEdit(true)}' class='dhx_item_editor' bind='obj.wk_work'>",
-			height: 40
+			height: 50
 		}
 	});
 	view.attachEvent("onItemClick",viewclick);
@@ -348,12 +360,12 @@ require "../footer.php";
 
 	//grid
 	var config = new Object();
-	config.header="&nbsp;,状态,&nbsp;,工作内容,开始<br>时间,要求完成<br>时间,承办单位<br>/部门,配合单位<br>/部门";
-	config.width="30,50,30,*,80,80,130,130";
-	config.align="center,center,center,left,center,center,center,center";
-	config.type="sub_row_grid,ro,link,txt,dhxCalendar,dhxCalendar,ro,ro";
-	config.tips="false,false,false,true,false,false,false,false";
-	config.ids=",wk_status,,wk_work,wk_startdate,wk_enddate,,";
+	config.header="&nbsp;,状态,&nbsp;,工作内容,开始<br>时间,要求完成<br>时间,承办单位<br>/部门,配合单位<br>/部门,督办人";
+	config.width="30,50,30,*,80,80,130,130,80";
+	config.align="center,center,center,left,center,center,center,center,center";
+	config.type="sub_row_grid,ro,link,txt,dhxCalendar,dhxCalendar,ro,ro,ro";
+	config.tips="false,false,false,true,false,false,false,false,false";
+	config.ids=",wk_status,,wk_work,wk_startdate,wk_enddate,,,";
 
 	mygrid = dhxAccord_main.cells("a1").attachGrid();
 
@@ -605,7 +617,7 @@ function deptRowDblClicked(rowId,cellIndex)
 	}
 	if (cellIndex == 0)
 	{
-		obj_dept = showdeptdlg();
+		var obj_dept = showdeptdlg();
 		if (obj_dept)
 		{
 			this.cells(rowId,0).setValue(obj_dept.name);
@@ -652,10 +664,12 @@ function viewclick(id, ev, html)
 
 function loaditem(act,id,key)
 {
+	//部门事项：id(部门id)
+	//主题事项：id(主题事项id)
 	$.get
 	(
 		"ajax.php",
-		{t:"loaditem",act:act,pid:id,key:key},
+		{t:"loaditem",act:act,id:id,key:key},
 		function (data){
 		//$("#info").val(data);
 			if (data!=""){

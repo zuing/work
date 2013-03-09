@@ -4,7 +4,9 @@
 		<item type="button"	id="my_work"	text="我的事项"	 img="open.gif"    />
 		<item type="button"	id="my_star"	text="我的关注"	 img="star.png"/>
 		<item type="button"	id="my_item"	text="我的督办"	 img="other.gif"     />
+		<item id="sep1_1"		type="separator"  />
 		<item type="button"	id="wk_submit"	text="申请结束"	 img="debug.gif"     />
+		<item type="button"	id="wk_dept"	text="部门事项"	 img="debug.gif"     />
 
 	</item>
 	<item id="sep1"		type="separator"  />
@@ -15,6 +17,7 @@
 		<item type="button"	id="wk_2"		text="已完成"		img="flag-green.png" />
 		<item type="button"	id="wk_3"		text="未完成"		img="flag-red.png" />
 		<item type="button"	id="wk_delay"	text="已超时"		img="flag-yellow.png" />
+		<item id="sep2_1"		type="separator"  />
 		<item type="button"	id="wk_0"		text="未下发"		img="flag-gray.png" />
 	</item>
 
