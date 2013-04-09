@@ -46,7 +46,7 @@ if (isset($_GET['t']) && $_GET['t']=='loaditem')
 	if ($_GET['act']=="wk_0") //未下发
 		$sql=sprintf("select * from %swork_item where wk_status=0 and wk_uid=%d and wk_parent<>0 order by wk_lasttime desc",DB_PREFIX,$userdata['user_id']);
 	if ($_GET['act']=="wk_delay") //已经超时
-		$sql=sprintf("select * from %swork_item where wk_status=2 and wk_enddate<%d and wk_parent<>0 order by wk_lasttime desc",DB_PREFIX,$userdata['user_id'],time());
+		$sql=sprintf("select * from %swork_item where wk_status<>0 and wk_enddate<%d-(24*60*60) and wk_parent<>0 order by wk_lasttime desc",DB_PREFIX,time());
 
  	if ($_GET['act']=="search") //查找
 	{
@@ -74,6 +74,8 @@ if (isset($_GET['t']) && $_GET['t']=='loaditem')
 				$img="<img src='".IMAGES."flag-red.png' width='24px' height='24px'></img>";
 				break;
 		}
+		if ($data['wk_enddate']<(time()-(24*60*60)) && $data['wk_status']==1)
+			$img="<img src='".IMAGES."flag-yellow.png' width='24px' height='24px'></img>";
 
 		$arr_dept="";
 		$arr_dept_0="";

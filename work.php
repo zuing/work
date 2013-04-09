@@ -177,6 +177,7 @@ require "../footer.php";
 			}
 			if (id == "process"){
 				wk_id=mygrid.getSelectedId();
+				//alert(wk_id);
 				if(wk_id != null)
 				{
 					dhxAccord_main.cells("a2").show();
@@ -361,7 +362,7 @@ require "../footer.php";
 	//grid
 	var config = new Object();
 	config.header="&nbsp;,状态,&nbsp;,工作内容,开始<br>时间,要求完成<br>时间,承办单位<br>/部门,配合单位<br>/部门,督办人";
-	config.width="30,50,30,*,80,80,130,130,80";
+	config.width="30,50,30,*,80,80,130,130,60";
 	config.align="center,center,center,left,center,center,center,center,center";
 	config.type="sub_row_grid,ro,link,txt,dhxCalendar,dhxCalendar,ro,ro,ro";
 	config.tips="false,false,false,true,false,false,false,false,false";

@@ -14,19 +14,19 @@ if (isset($_POST['act']))
 {
 	if ($_POST['act']=="send_submit")
 	{
-		$sql = sprintf("update %swork_item set wk_submit=1 where wk_id=%d",DB_PREFIX,$_GET['wk_id']);
+		$sql = sprintf("update %swork_item set wk_submit=1,wk_lasttime=%d where wk_id=%d",DB_PREFIX,$_GET['wk_id'],time());
 		dbquery($sql);
 		work_sms($wk_id,"工作督办:一项工作已经提交申请结束");
 	}
 	if ($_POST['act']=="back_submit")
 	{
-		$sql = sprintf("update %swork_item set wk_submit=0 where wk_id=%d",DB_PREFIX,$wk_id);
+		$sql = sprintf("update %swork_item set wk_submit=0,wk_lasttime=%d where wk_id=%d",DB_PREFIX,$wk_id,time());
 		dbquery($sql);
 		work_sms($wk_id,"工作督办:一项申请结束事项被退回");
 	}
 	if ($_POST['act']=="del_result")
 	{
-		$sql = sprintf("update %swork_item set wk_submit=1,wk_status=1 where wk_id=%d",DB_PREFIX,$wk_id);
+		$sql = sprintf("update %swork_item set wk_submit=1,wk_status=1,wk_lasttime=%d where wk_id=%d",DB_PREFIX,$wk_id,time());
 		dbquery($sql);
 		$sql = sprintf("delete from %swork_result where wk_id=%d",DB_PREFIX,$wk_id);
 		dbquery($sql);
@@ -46,7 +46,7 @@ if (isset($_POST['act']))
 		);
 		dbquery($sql);
 
-		$sql = sprintf("update %swork_item set wk_status=%d,wk_submit=2 where wk_id=%d",DB_PREFIX,$_POST['rst_status'],$wk_id);
+		$sql = sprintf("update %swork_item set wk_status=%d,wk_submit=2,wk_lasttime=%d where wk_id=%d",DB_PREFIX,$_POST['rst_status'],$wk_id,time());
 		dbquery($sql);
 
 		work_sms($wk_id,"工作督办:有一条新的督办意见");
@@ -71,6 +71,9 @@ if (isset($_POST['act']))
 			dbquery($sql);
 		}
 		$wk_pid = mysql_insert_id();
+
+		$sql = sprintf("update %swork_item set wk_lasttime=%d where wk_id=%d",DB_PREFIX,$wk_id,time());
+		dbquery($sql);
 
 		//保存附件
 		$cache_id=array();
