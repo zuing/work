@@ -50,7 +50,6 @@ if (isset($_POST['act']))
 		dbquery($sql);
 
 		work_sms($wk_id,"工作督办:有一条新的督办意见");
-
 	}
 
 	if ($_POST['act']=="ok")
@@ -107,6 +106,7 @@ if (isset($_POST['act']))
 
 		//send sms
 		work_sms($wk_id,"工作督办:有一条新的工作进展");
+
 	}
 	echo "<script>window.open('process.php?wk_id=".$wk_id."','_self')</script>";
 }

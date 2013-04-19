@@ -255,6 +255,10 @@ require "../footer.php";
 				)
 				return;
 			}
+			if (id == "help")
+			{
+				window.open("help.php");
+			}
 
 			if (id == "my_star")
 			{

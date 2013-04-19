@@ -43,4 +43,6 @@
 
 		<item id="new_single"		type="button"		text="新增特别事项"		img="next.gif"		imgdis="next_dis.gif"/>
 	</item>
+	<item id="help"		type="button"		text="帮助说明"			img="text_document.gif"		imgdis="text_document.gif"/>
+
 </toolbar>
