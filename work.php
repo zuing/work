@@ -368,7 +368,7 @@ require "../footer.php";
 	config.header="&nbsp;,状态,&nbsp;,工作内容,开始<br>时间,要求完成<br>时间,承办单位<br>/部门,配合单位<br>/部门,督办人";
 	config.width="30,50,30,*,80,80,130,130,60";
 	config.align="center,center,center,left,center,center,center,center,center";
-	config.type="sub_row_grid,ro,link,txt,dhxCalendar,dhxCalendar,ro,ro,ro";
+	config.type="sub_row_grid,ro,link,txt,dhxCalendar,dhxCalendar,ro,ro,ed";
 	config.tips="false,false,false,true,false,false,false,false,false";
 	config.ids=",wk_status,,wk_work,wk_startdate,wk_enddate,,,";
 
@@ -384,6 +384,8 @@ require "../footer.php";
 	mygrid.setColumnIds(config.ids);
 	mygrid.setDateFormat("%Y-%m-%d");
 	mygrid.enableMultiline(true);
+	mygrid.attachEvent("onEditCell", dutyCellEdit);
+
 	mygrid.attachEvent("onRowSelect", function(id,ind){
 			dhxToolbar1.enableItem("star");
 			dhxToolbar1.enableItem("process");
@@ -737,5 +739,49 @@ function open_attach(wk_id)
 		dhxAccord_main.openItem("a3");
 		dhxAccord_main.cells("a3").attachURL("attach.php?wk_id="+wk_id);
 	}
+}
+function dutyCellEdit(stage,rowId,cellIndex,newValue,oldValue){
+	if (stage == 1 && cellIndex == 8)
+	{
+		if (window.confirm("更改督办人后将无法修改本事项相关数据，请先填写完整相关数据，是否继续更改督办人？"))
+		{
+			obj_emp = showuserdlg();
+		}
+		mygrid.selectCell(0,1);
+
+	}
+	if (stage == 2 && cellIndex == 8)
+	{
+		if (obj_emp)
+		{
+			mygrid.cells(rowId,8).setValue(obj_emp.name);
+			$.get
+			(
+				"ajax.php",
+				{t:"chg_uid",wk_id:rowId,uid:obj_emp.id,uname:obj_emp.name},
+				function (data){
+					if (data==""){
+	
+					}
+				}
+			)
+
+			obj_emp = null;
+		}
+	}
+	return true;
+}
+function showuserdlg()
+{
+	var r;
+	
+	r= window.showModalDialog("../mods/userdlg_r.php", "", "dialogHeight:320px;dialogWidth:380px;scroll:no;status:no");
+	if(typeof r != "undefined")
+	{
+		return r;
+		//alert(r.phone);
+		//document.getElementById("to_phones").value=r.phone;
+	}
+	return false;
 }
 </script>

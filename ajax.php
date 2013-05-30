@@ -255,7 +255,11 @@ if (isset($_GET['t']) && $_GET['t']=='do_out')
 		send_sms($data['names'],$data['phones'],"工作督办:您有新的工作等待处理",$userdata['user_id'],"工作督办",$userdata['name']);
 	}
 }
-
+if (isset($_GET['t']) && $_GET['t']=='chg_uid')
+{
+	$sql = sprintf("update %swork_item set wk_uid=%d,wk_uname='%s' where wk_id=%d",DB_PREFIX,$_GET['uid'],iconv("UTF-8","GBK",$_GET['uname']),$_GET['wk_id']);
+	dbquery($sql);
+}
 
 function del_attach($id,$aid,$cat)
 {
